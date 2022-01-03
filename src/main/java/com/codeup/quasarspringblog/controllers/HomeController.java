@@ -13,5 +13,10 @@ public class HomeController {
         return "This is the landing page placeholder!";
     }
 
+    @GetMapping("/index")
+    public String welcome(){
+        return "home";
+    }
+
 
 }
