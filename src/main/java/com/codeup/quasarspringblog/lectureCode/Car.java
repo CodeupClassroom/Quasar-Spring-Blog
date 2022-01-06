@@ -1,6 +1,7 @@
-package com.codeup.quasarspringblog.controllers;
+package com.codeup.quasarspringblog.lectureCode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="cars")
@@ -15,6 +16,9 @@ public class Car {
 
     @Column(nullable = false, length = 50)
     private String model;
+
+    @ManyToMany(mappedBy = "vehicle")
+    private List<Owner> carOwner;
 
     public void setId(long id) {
         this.id = id;
