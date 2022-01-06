@@ -1,4 +1,4 @@
-package com.codeup.quasarspringblog.controllers;
+package com.codeup.quasarspringblog.lectureCode;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
