@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
-    public PostController(PostRepository postDao){
+
+    public PostController(PostRepository postDao, UserRepository userDao){
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
 
@@ -58,23 +61,27 @@ public class PostController {
     }
 
 
-
-
-
-
-
-
-
     @GetMapping("/posts/create")
-    @ResponseBody
     public String viewCreatePost(){
-        return "Placeholder for the create post form!";
+
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createPost(){
-        return "";
+    public String createPost(@RequestParam(name="postTitle") String postTitle, @RequestParam(name="postBody") String postBody){
+        System.out.println("postTitle = " + postTitle);
+        System.out.println("postBody = " + postBody);
+
+        Post newPost = new Post();
+
+        newPost.setBody(postBody);
+        newPost.setTitle(postTitle);
+        newPost.setUser(userDao.getById(1L));
+
+        postDao.save(newPost);
+
+
+        return "redirect:/posts";
     }
 
 

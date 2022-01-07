@@ -10,7 +10,10 @@
 
 <div th:each="post : ${allPosts}">
     <span th:text="${post.getTitle()}"></span>
+    <br>
+    Post written by: <span th:text="${post.getUser().getEmail()}"></span>
     <p th:text="${post.getBody()}"></p>
+
 
     <form th:action="'/posts/edit/' + ${post.getId()}" method="get">
         <button>Edit</button>
