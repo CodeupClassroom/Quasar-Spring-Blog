@@ -62,23 +62,17 @@ public class PostController {
 
 
     @GetMapping("/posts/create")
-    public String viewCreatePost(){
-
+    public String viewCreatePost(Model model){
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam(name="postTitle") String postTitle, @RequestParam(name="postBody") String postBody){
-        System.out.println("postTitle = " + postTitle);
-        System.out.println("postBody = " + postBody);
+    public String createPost(@ModelAttribute Post post){
 
-        Post newPost = new Post();
+        post.setUser(userDao.getById(1L));
 
-        newPost.setBody(postBody);
-        newPost.setTitle(postTitle);
-        newPost.setUser(userDao.getById(1L));
-
-        postDao.save(newPost);
+        postDao.save(post);
 
 
         return "redirect:/posts";
