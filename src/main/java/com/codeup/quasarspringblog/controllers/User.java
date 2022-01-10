@@ -4,24 +4,30 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String username;
-
-    @Column
     private String email;
-
-    @Column
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Post> posts;
 
-    @OneToMany(mappedBy = "user")
-    private List<Post> userPosts;
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public User(){
+    }
 
     public long getId() {
         return id;
@@ -53,13 +59,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Post> getUserPosts() {
-        return userPosts;
-    }
-
-    public void setUserPosts(List<Post> userPosts) {
-        this.userPosts = userPosts;
     }
 }

@@ -14,6 +14,7 @@ public class PostController {
     public PostController(PostRepository postDao, UserRepository userDao){
         this.postDao = postDao;
         this.userDao = userDao;
+
     }
 
 
@@ -69,12 +70,8 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post){
-
-        post.setUser(userDao.getById(1L));
-
+        post.setUser(userDao.getById(2L));
         postDao.save(post);
-
-
         return "redirect:/posts";
     }
 

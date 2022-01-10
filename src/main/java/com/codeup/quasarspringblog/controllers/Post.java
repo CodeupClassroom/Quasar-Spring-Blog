@@ -29,6 +29,10 @@ public class Post {
         this.user = user;
     }
 
+    public Post(){
+
+    }
+
     public long getId() {
         return id;
     }
