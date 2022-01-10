@@ -1,9 +1,11 @@
 package com.codeup.quasarspringblog.controllers;
 
 import com.codeup.quasarspringblog.models.Post;
+import com.codeup.quasarspringblog.models.User;
 import com.codeup.quasarspringblog.repositories.PostRepository;
 import com.codeup.quasarspringblog.repositories.UserRepository;
 import com.codeup.quasarspringblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -76,8 +78,9 @@ public class PostController {
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post){
 
+        User postCreator = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        post.setUser(userDao.getById(2L));
+        post.setUser(postCreator);
 
         String emailSubject = post.getUser().getUsername() + ", your post has been created!";
 
