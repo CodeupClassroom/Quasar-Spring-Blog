@@ -1,5 +1,9 @@
 package com.codeup.quasarspringblog.controllers;
 
+import com.codeup.quasarspringblog.models.Post;
+import com.codeup.quasarspringblog.repositories.PostRepository;
+import com.codeup.quasarspringblog.repositories.UserRepository;
+import com.codeup.quasarspringblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +13,13 @@ public class PostController {
 
     private final PostRepository postDao;
     private final UserRepository userDao;
+    private final EmailService emailService;
 
 
-    public PostController(PostRepository postDao, UserRepository userDao){
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService){
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
 
@@ -70,8 +76,14 @@ public class PostController {
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post){
 
-        post.setUser(userDao.getById(1L));
 
+        post.setUser(userDao.getById(2L));
+
+        String emailSubject = post.getUser().getUsername() + ", your post has been created!";
+
+        String emailBody = "Congratulations - your latest blog post is up and ready to view on your blogging website. Your post read: " + post.getBody();
+
+        emailService.prepareAndSend(post, emailSubject, emailBody);
         postDao.save(post);
 
 

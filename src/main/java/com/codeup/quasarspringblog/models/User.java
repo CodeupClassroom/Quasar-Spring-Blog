@@ -1,4 +1,4 @@
-package com.codeup.quasarspringblog.controllers;
+package com.codeup.quasarspringblog.models;
 
 import javax.persistence.*;
 import java.util.List;
